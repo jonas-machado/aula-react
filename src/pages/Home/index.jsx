@@ -4,16 +4,30 @@ import './styles.css'
 import { Card } from '../../componentes/Card'
 
 export function Home() {
-const [studentName, setStudentName] = useState()
+  const [studentName, setStudentName] = useState()
+  const [students, setStudent] = useState([])
 
+  function handleAddStudent() {
+    const newStudent = {
+      name: setStudentName,
+      time: new Date().toLocaleTimeString("pt-br", {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      })
+    };
+    setStudent([newStudent])
+  }
 
   return (
     <div className='container'>
-      <h1>nome: {studentName}</h1>
+      <h1>Checagem</h1>
       <input placeholder='Digite seu nome' id='name' type="text" onChange={e => setStudentName(e.target.value)} />
       <button>Gerar</button>
-      <Card name='Rodrigo' time='10:55:25'/>
-      <Card name='João' time='11:00:10'/>
+      {
+        students.map(students => <Card name={studentName.name} time={studentName.time} />)
+
+      }
     </div>
 
   )
