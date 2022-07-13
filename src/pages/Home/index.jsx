@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './styles.css'
 
 import { Card } from '../../componentes/Card'
@@ -20,12 +20,18 @@ export function Home() {
   }
   return (
     <div className='container'>
+      <header>
       <h1>Checagem</h1>
+      <div>
+        <strong>Jonas</strong>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeSotG9eMJOHsle78T1yZjkDGiimiD68hh0Q&usqp=CAU" alt="foto do perfil" />
+      </div>
+      </header>
       <input placeholder='Digite seu nome' id='name' type="text" onChange={e => setStudentName(e.target.value)} />
       <button type='button' onClick={handleAddStudent}>Gerar</button>
       {
         students.map(student => 
-        <Card key={student.name} name={student.name} time={student.time} />)
+        <Card key={student.time} name={student.name} time={student.time} />)
 
       }
     </div>
