@@ -6,6 +6,7 @@ import { Card } from '../../componentes/Card'
 export function Home() {
   const [studentName, setStudentName] = useState()
   const [students, setStudent] = useState([])
+  const [user, setUser] = useState({ name: '', avatar: '' })
 
   function handleAddStudent() {
     const newStudent = {
@@ -16,22 +17,32 @@ export function Home() {
         second: '2-digit'
       })
     };
-    setStudent( prevState => [...prevState, newStudent])
+    setStudent(prevState => [...prevState, newStudent])
   }
+
+  useEffect(() => {
+    fetch('https://api.github.com/users/jonas-machado').then(response => response.json()).then(data => {
+      setUser({
+        name: data.name,
+        avatar: data.avatar_url
+      })
+    })
+  }, [])
+
   return (
     <div className='container'>
       <header>
-      <h1>Checagem</h1>
-      <div>
-        <strong>Jonas</strong>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeSotG9eMJOHsle78T1yZjkDGiimiD68hh0Q&usqp=CAU" alt="foto do perfil" />
-      </div>
+        <h1>Checagem</h1>
+        <div>
+          <strong>{user.name}</strong>
+          <img src={user.avatar} />
+        </div>
       </header>
       <input placeholder='Digite seu nome' id='name' type="text" onChange={e => setStudentName(e.target.value)} />
       <button type='button' onClick={handleAddStudent}>Gerar</button>
       {
-        students.map(student => 
-        <Card key={student.time} name={student.name} time={student.time} />)
+        students.map(student =>
+          <Card key={student.time} name={student.name} time={student.time} />)
 
       }
     </div>
